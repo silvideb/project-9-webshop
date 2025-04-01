@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>De Bibliotheek</title>
+    <title>De Webshop</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Voeg Tailwind CSS toe via CDN -->
@@ -31,6 +31,9 @@
             <div id="navbar-menu" class="hidden md:flex space-x-6 text-white">
                 <a class="hover:text-yellow-500" href="/products">Producten</a>
                 <a class="hover:text-yellow-500" href="/categories">Categorieen</a>
+                <a class="hover:text-yellow-500" href="/coupons">Coupons</a>
+                <a class="hover:text-yellow-500" href="/roles">Rollen</a>
+                <a class="hover:text-yellow-500" href="/users">Gebruikers</a>
             </div>
         </div>
     </nav>

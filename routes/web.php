@@ -11,6 +11,8 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,3 +44,26 @@ Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index'
     Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
     Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
     Route::resource('coupons', CouponController::class);
+
+
+Route::name("roles.")->prefix("roles")->group(function () {
+    Route::get('/', [RoleController::class, 'index'])->name('index');
+    Route::get('/create', [RoleController::class, 'create'])->name('create');
+    Route::post('/', [RoleController::class, 'store'])->name('store');
+    Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('edit');
+    Route::post('/update/{role}', [RoleController::class, 'update'])->name('update');
+    Route::delete('/delete/{role}', [RoleController::class, 'destroy'])->name('destroy');
+});
+
+Route::name("users.")->prefix("users")->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/edit/{user}', [UserController::class, 'edit'])->name('edit');
+    Route::post('/update/{user}', [UserController::class, 'update'])->name('update');
+    Route::delete('/delete/{user}', [UserController::class, 'destroy'])->name('destroy');
+    // Route::get('/users/{user}', function ($id) {
+    //     $user = User::find($id);
+    //     return view('users.show', compact('user'));
+    // })->name('users.show');
+});

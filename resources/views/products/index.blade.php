@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 <x-base-layout>
     <div class="text-center mb-6">
         <!-- Centered Heading -->
         <h1 class="text-3xl font-bold text-gray-800">Alle Producten</h1>
     </div>
-=======
-
-    <div>
-        <h1>Alle Producten</h1>
->>>>>>> 0b1d98fd92805c67c23616edc882903091c4b005
 
     <!-- Lijst van producten -->
     <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -42,7 +36,6 @@
             @endforeach
         </ul>
 
-<<<<<<< HEAD
         <!-- Centered Create Product Button -->
         <div class="mt-6 flex justify-center">
             <a href="{{ route('products.create') }}" class="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition duration-200 ease-in-out">
@@ -51,13 +44,3 @@
         </div>
     </div>    
 </x-base-layout>
-=======
-            <!-- Create Button -->
-            <div>
-                <a href="{{ route('products.create') }}">
-                    Maak een nieuw product
-                </a>
-            </div>
-    </div>
-
->>>>>>> 0b1d98fd92805c67c23616edc882903091c4b005
