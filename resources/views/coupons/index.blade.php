@@ -1,48 +1,63 @@
+<x-base-layout>
+    <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg">
 
+        <!-- Centered Heading -->
+        <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">Overzicht Kortingsbonnen</h1>
 
+        <!-- Success Message -->
+        @if (session('success'))
+            <div class="text-green-500 bg-green-100 p-4 rounded-md mb-6">
+                {{ session('success') }}
+            </div>
+        @endif
 
-<h1>Overzicht kortingsbonnen</h1>
+        <!-- Create Coupon Button -->
+        <div class="mb-6 text-center">
+            <a href="{{ route('coupons.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-200 ease-in-out">
+                Nieuwe kortingsbon aanmaken
+            </a>
+        </div>
 
-    @if (session('success'))
-        <div style="color:green;">{{ session('success') }}</div>
-    @endif
+        <!-- Coupons Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto border-collapse border border-gray-300">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">ID</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Kortingscode</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Type</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Kortingswaarde</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Startdatum</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Einddatum</th>
+                        <th class="px-4 py-2 border text-left text-sm text-gray-600">Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($coupons as $coupon)
+                    <tr class="hover:bg-gray-100 transition duration-200 ease-in-out">
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ $coupon->id }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ $coupon->code }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ ucfirst($coupon->discount_type) }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ $coupon->discount_value }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ $coupon->start_date ?? 'Onbekend' }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">{{ $coupon->end_date ?? 'Onbekend' }}</td>
+                        <td class="px-4 py-2 border text-sm text-gray-800">
+                            <!-- Edit Link -->
+                            <a href="{{ route('coupons.edit', $coupon->id) }}" class="text-blue-500 hover:text-blue-700 transition duration-200 ease-in-out">Bewerken</a>
 
-    <a href="{{ route('coupons.create') }}">Nieuwe kortingsbon aanmaken</a>
-
-    <table border="1" cellpadding="5" cellspacing="0" style="margin-top:20px;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Kortingscode</th>
-                <th>Type</th>
-                <th>Kortingswaarde</th>
-                <th>Startdatum</th>
-                <th>Einddatum</th>
-                <th>Acties</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($coupons as $coupon)
-                <tr>
-                    <td>{{ $coupon->id }}</td>
-                    <td>{{ $coupon->code }}</td>
-                    <td>{{ ucfirst($coupon->discount_type) }}</td>
-                    <td>{{ $coupon->discount_value }}</td>
-                    <td>{{ $coupon->start_date ?? 'Onbekend' }}</td>
-                    <td>{{ $coupon->end_date ?? 'Onbekend' }}</td>
-                    <td>
-                        <!-- Link naar de edit pagina -->
-                        <a href="{{ route('coupons.edit', $coupon->id) }}">Bewerken</a>
-                        
-                        <!-- Delete form -->
-                        <form action="{{ route('coupons.destroy', $coupon->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze kortingsbon wilt verwijderen?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px;">Verwijderen</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
+                            <!-- Delete Form -->
+                            <form action="{{ route('coupons.destroy', $coupon->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze kortingsbon wilt verwijderen?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-200 ease-in-out">
+                                    Verwijderen
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</x-base-layout>
