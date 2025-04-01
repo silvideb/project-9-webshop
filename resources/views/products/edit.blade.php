@@ -1,3 +1,4 @@
+
     <!-- Foutmeldingen weergeven -->
     @if ($errors->any())
         <div>
@@ -46,3 +47,4 @@
             Bewerken
         </button>
     </form>
+

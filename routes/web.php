@@ -4,12 +4,11 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
-use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\RoleController;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -18,6 +17,17 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// Cart Routes
+Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy']);
+Route::put('/cart/update-item/{id}', [CartController::class, 'updateItem'])->name('cart.updateItem');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.index');
+
+// Coupon & Product Routes
+
+
+Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('products.addToCart');
 
 Route::name("products.")->prefix("products")->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
@@ -37,10 +47,7 @@ Route::name("categories.")->prefix("categories")->group(function () {
     Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 
-Route::get('/cart', function (Request $request) {
-    $cart = session()->get('cart', []);
-    return view('cart', compact('cart'));
-});
+
 Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
     Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
     Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
