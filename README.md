@@ -259,3 +259,66 @@
 * Ik kan zien hoeveel ik bespaar door de bundel te kopen
 * Ik kan bepaalde aspecten van de bundel aanpassen als dat is toegestaan
 * Ik kan de hele bundel met één klik aan mijn winkelwagen toevoegen
+
+## Core ERD: 
+Shows the fundamental relationships between users, products, orders, and roles
+
+```mermaid
+erDiagram
+    User ||--o{ Order : places
+    User ||--o{ Address : has
+    User ||--o{ Review : writes
+    User }|--o{ Role : has
+    
+    Role }|--o{ Permission : includes
+    
+    Product ||--o{ OrderItem : contains
+    Product ||--o{ ProductVariant : has
+    Product ||--o{ Review : receives
+    Product }|--o{ Category : belongs_to
+    
+    Order ||--o{ OrderItem : contains
+    Order ||--o{ OrderStatus : tracks
+    
+    ProductVariant ||--o{ StockLevel : has
+    
+    Category }o--o{ Category : has_parent
+```
+
+## E-Commerce ERD: 
+Focuses on shopping features like cart, wishlist, and payment processing
+```mermaid
+    erDiagram
+    User ||--o{ CartItem : has
+    User ||--o{ Wishlist : owns
+    
+    Product ||--o{ CartItem : added_to
+    Product ||--o{ WishlistItem : saved_in
+    Product ||--o{ ProductImage : displays
+    
+    Wishlist ||--o{ WishlistItem : contains
+    
+    Order }o--o{ Coupon : applies
+    Order ||--o{ PaymentTransaction : processes
+    
+    Product }o--o{ ProductBundle : part_of
+    ProductBundle ||--o{ BundleItem : consists_of
+```
+
+## Customer Service ERD: 
+Displays service-related entities like support tickets, notifications and store locations
+```mermaid
+erDiagram
+    User ||--o{ SupportTicket : creates
+    User ||--o{ Notification : receives
+    User ||--o{ RecentlyViewed : tracks
+    
+    Product ||--o{ RecentlyViewed : appears_in
+    Product }o--o{ Tag : has
+    Product }o--o{ Attribute : has
+    
+    SupportTicket ||--o{ TicketMessage : contains
+    SupportTicket }o--|| SupportAgent : assigned_to
+    
+    Store ||--o{ StoreHours : schedules
+```
