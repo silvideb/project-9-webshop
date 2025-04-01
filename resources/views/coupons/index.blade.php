@@ -1,6 +1,3 @@
-
-
-
 <h1>Overzicht kortingsbonnen</h1>
 
     @if (session('success'))
@@ -31,10 +28,10 @@
                     <td>{{ $coupon->start_date ?? 'Onbekend' }}</td>
                     <td>{{ $coupon->end_date ?? 'Onbekend' }}</td>
                     <td>
-                        <!-- Link naar de edit pagina -->
+                        
                         <a href="{{ route('coupons.edit', $coupon->id) }}">Bewerken</a>
                         
-                        <!-- Delete form -->
+                        
                         <form action="{{ route('coupons.destroy', $coupon->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze kortingsbon wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
