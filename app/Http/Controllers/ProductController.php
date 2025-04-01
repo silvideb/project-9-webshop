@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,6 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+
         $categories = Category::all();
 
         return view('products.index', compact('products', 'categories'));
@@ -70,5 +73,8 @@ class ProductController extends Controller
         $product->stock = $request->stock;
         $product->save();
         $product->categories()->attach($request->category_id);
+
+        return view('welcome', compact('product'));
+
     }
 }
