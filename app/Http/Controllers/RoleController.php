@@ -2,65 +2,58 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\RoleRequest;
+
 use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
     public function index()
-{
-    $roles = Role::all();
 
-    return view('roles.index', compact('roles'));
-}
+    {
+        $roles = Role::all();
+        return view('roles.index', compact('roles'));
+    }
+    public function create()
+    {
+        return view('roles.create');
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
 
-public function create()
-{
-    $roles = Role::all();
+        Role::create($request->all());
 
-    return view('roles.create', compact('roles'));
-}
+        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+    }
+    public function edit($id)
+    {
+        $role = Role::findOrFail($id);
+        return view('roles.edit', compact('role'));
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
 
-public function store(RoleRequest $request)
-{
-    $role = new Role();
+        $role = Role::findOrFail($id);
+        $role->update($request->all());
 
-    $this->save($role, $request);
+        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+    }
+    public function destroy($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->delete();
 
-    return redirect('/roles');
-}
-
-public function show($role)
-{
-    $role = Role::find($role);
-
-    return view('roles.show', compact('role'));
-}
-
-public function edit(Role $role)
-{
-    return view('roles.edit', compact('role'));
-}
-
-public function update(RoleRequest $request, Role $role)
-{
-    $this->save($role, $request);
-
-    return redirect('/roles');
-}
-
-public function destroy($role)
-{
-    $role->delete();
-
-    return redirect('/roles');
-}
-
-    private function save(Role $role, Request $request)
-{
-    $role->name = $request->name;
-    $role->save();
-}
+        return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
+    }
 
 }
