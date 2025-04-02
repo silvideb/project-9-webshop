@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,29 +18,63 @@ class UserController extends Controller
 
     public function create()
     {
+
+        
+
         return view('users.create');
     }
 
     public function store(Request $request)
     {
-        // Logic to store user data
+       User::create($request->all());
+    
+
         return redirect()->route('users.index');
     }
 
     public function edit($id)
     {
-        return view('users.edit', compact('id'));
+        $users =  User::findorFail($id);
+        $roles = Role::all();
+        
+        
+        return view('users.edit', compact('users' , 'roles'));
     }
 
     public function update(Request $request, $id)
     {
-        // Logic to update user data
+
+
+        // dd($request->all());
+       
+        $user = User::findorfail($id);
+        $roles = Role::all();
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        
+        ]);
+        $user->update($request->all()); 
+        $user->roles()->sync($request->roles);  
         return redirect()->route('users.index');
     }
 
     public function destroy($id)
     {
-        // Logic to delete user
+        $users = User::findorFail($id);
+
+        $users->delete();
+       
+       
+        
         return redirect()->route('users.index');
     }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+
+        return view('users.show', compact('user'));
+    }
 }
+
