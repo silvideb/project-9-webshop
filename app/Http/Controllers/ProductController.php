@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -15,9 +12,33 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        $categories = Category::all();
+        return view('products.index', compact('products'));
+    }
+  
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
+    }
+  
+    public function addToCart($id)
+    {
+        $product = Product::findOrFail($id);
 
-        return view('products.index', compact('products', 'categories'));
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "name"     => $product->name,
+                "price"    => $product->price,
+                "quantity" => 1
+            ];
+        }
+        session()->put('cart', $cart);
+
+        return redirect()->route('products.index')->with('success', 'Product is toegevoegd aan de winkelwagen!');
     }
 
     public function create()
@@ -37,12 +58,6 @@ class ProductController extends Controller
         return redirect('/products');
     }
 
-    public function show($product)
-    {
-        $product = Product::find($product);
-
-        return view('products.show', compact('product'));
-    }
 
     public function edit(Product $product)
     {   
@@ -75,6 +90,5 @@ class ProductController extends Controller
         $product->categories()->attach($request->category_id);
 
         return view('welcome', compact('product'));
-
     }
 }
