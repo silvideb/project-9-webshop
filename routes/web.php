@@ -4,14 +4,13 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
-use App\Http\Controllers\CartController;
 
 use App\Http\Controllers\RoleController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CouponController;
-
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 
@@ -77,3 +76,11 @@ Route::name("users.")->prefix("users")->group(function () {
     // })->name('users.show');
 });
 
+Route::name("reviews.")->prefix("reviews")->group(function () {
+    Route::get('/', [ReviewController::class, 'index'])->name('index');
+    Route::get('/create', [ReviewController::class, 'create'])->name('create');
+    Route::post('/', [ReviewController::class, 'store'])->name('store');
+    Route::get('/edit/{review}', [ReviewController::class, 'edit'])->name('edit');
+    Route::post('/update/{review}', [ReviewController::class, 'update'])->name('update');
+    Route::delete('/delete/{review}', [ReviewController::class, 'destroy'])->name('destroy');
+});

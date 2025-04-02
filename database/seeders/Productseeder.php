@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Product;
+
 class ProductSeeder extends Seeder
 {
     /**
@@ -56,6 +58,6 @@ class ProductSeeder extends Seeder
             'updated_at' => now(),
         ],
     ];
-    DB::table('products')->insert($products);
+    Product::insert($products);
     }
 }
