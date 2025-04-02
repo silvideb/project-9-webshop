@@ -3,7 +3,7 @@
     <h1>Bewerk Gebruiker</h1>
     <form action="{{ route('users.update', $users->id) }}" method="POST">
         @csrf
-        @method('PUT')
+        @method('POST')
 
         <div class="form-group">
             <label for="name">Naam</label>
@@ -17,13 +17,24 @@
 
         <div class="form-group">
             <label for="role">Rol</label>
-            <select name="role" id="role" class="form-control" required>
+            <div id="role">
                 @foreach($roles as $role)
-                    <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
-                        {{ $role->name }}
-                    </option>
+                    <div class="form-check">
+                        <input 
+                            type="checkbox" 
+                            name="roles[]" 
+                            id="role_{{ $role->id }}" 
+                            value="{{ $role->id }}" 
+                            class="form-check-input" 
+                            {{ $users->role_id == $role->id ? 'checked' : '' }} 
+                       ]
+                        >
+                        <label for="role_{{ $role->id }}" class="form-check-label">
+                            {{ $role->name }}
+                        </label>
+                    </div>
                 @endforeach
-            </select>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Opslaan</button>

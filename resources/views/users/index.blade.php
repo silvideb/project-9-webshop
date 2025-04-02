@@ -7,6 +7,7 @@
                 <th>#</th>
                 <th>Naam</th>
                 <th>Email</th>
+                <th>Rol</th>
                 <th>Acties</th>
             </tr>
         </thead>
@@ -16,6 +17,11 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>@foreach ($user->roles as $role)
+                    {{ $role->name }}@if (!$loop->last), @endif
+                    
+                @endforeach</td>
+               
                 <td>
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">Bekijken</a>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Bewerken</a>
