@@ -16,7 +16,11 @@ use App\Http\Controllers\UserController;
 use App\Models\User;
 
 Route::get('/', function () {
-    return view('welcome');
+    $products = \App\Models\Product::all();
+
+    
+
+    return view('welcome' , compact('products'));
 });
 
 
@@ -96,3 +100,4 @@ Route::name("reviews.")->prefix("reviews")->group(function () {
     Route::post('/update/{review}', [ReviewController::class, 'update'])->name('update');
     Route::delete('/delete/{review}', [ReviewController::class, 'destroy'])->name('destroy');
 
+});

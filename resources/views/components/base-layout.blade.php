@@ -34,6 +34,7 @@
                 <a class="hover:text-yellow-500" href="/coupons">Coupons</a>
                 <a class="hover:text-yellow-500" href="/roles">Rollen</a>
                 <a class="hover:text-yellow-500" href="/users">Gebruikers</a>
+                <a class="hover:text-yellow-500" href="/cart">&#xF242;</a>
             </div>
         </div>
     </nav>
